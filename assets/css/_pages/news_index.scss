@@ -1,0 +1,14 @@
+@import "./_mixin/_flex.scss";
+@import "./_variables/_variables.scss";
+
+.news-index{
+    section{
+        @include flex(center,center);
+        height: calc(100% - #{$navHeight});
+
+    }
+
+    form{
+        width: 70%;
+    }
+}

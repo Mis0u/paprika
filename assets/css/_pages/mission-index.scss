@@ -1,0 +1,28 @@
+.missions-index{
+    .missions{
+        width: 33%;
+        height: 30vh;
+        position: relative;
+        background-color:#e66d6a !important;
+
+        .mission{
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-color:#e66d6a !important;
+            height: 100%;
+
+            & div{
+                background-color: #e66d6a !important;
+            }
+        }
+
+        a.btn{
+            position: absolute;
+            bottom: -50px;
+            left:50%;
+            transform:translateX(-50%);
+        }
+    }
+
+
+}

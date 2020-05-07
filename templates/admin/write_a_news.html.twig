@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Écrire une news{% endblock %}
+{% block classBody %}class="news-index"{% endblock %}
+
+{% block body %}
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+
+<section>
+{{ form_start(form) }}
+    <h1 class="text-center mb-3">Écrire une news</h1>
+    {{ form_widget(form) }}
+
+    <button class="btn btn-primary w-100">Publier</button>
+{{ form_end(form) }}
+</section>
+{% endblock %}

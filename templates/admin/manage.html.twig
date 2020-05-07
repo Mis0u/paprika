@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+{% block classBody %}class="administration-index"{% endblock %}
+
+{% block body %}
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+
+<section class="d-flex justify-content-around align-items-center">
+        <figure class="d-flex flex-column">
+            <a href="{{path('manage_user')}}"><img src="{{asset('images/employee.png')}}" alt="employee">
+                <figcaption class="text-center">
+                    Pour gérer vos employés, cliquer sur l'image 🧍‍♂️🧍‍♀️
+                </figcaption>
+            </a>
+        </figure>
+        <figure class="d-flex flex-column">
+            <a href="{{path('manage_news')}}"><img src="{{asset('images/news.png')}}" alt="employee">
+            <figcaption class="text-center">
+                Pour gérer vos actualités, cliquer sur l'image 👨‍💻👨‍💻
+            </figcaption>
+            </a>
+        </figure>
+</section>
+
+{% endblock %}

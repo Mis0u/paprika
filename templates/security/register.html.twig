@@ -1,12 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Enregistrer un nouvel utilisateur{% endblock %}
+
+{% block classBody %}class="registration-index"{% endblock %}
 
 {% block body %}
-
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+                {{ message|raw }}
+    </div>
+{% endfor %}
+<section class="register">
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">Envoyer</button>
-    {{ form_end(form) }}
+        <fieldset>
+            <h1>Bonjour <br> {{admin.getFullName|title}}</h1>
+            <blockquote class="text-center mt-3">
+                <q>Enregistrer un nouveau salarié n'a jamais était aussi simple</q>
+            </blockquote>
+        </fieldset>
 
+        {{ form_widget(form) }}
+
+        <p class="text-center"><kbd>Il ne vous restes plus qu'à l'enregistrer</kbd></p>
+        <p class="text-center"><button type="submit" class="btn btn-primary">Enregistrer</button></p>
+    {{ form_end(form) }}
+</section>
 {% endblock %}

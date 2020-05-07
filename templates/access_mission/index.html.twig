@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes missions{% endblock %}
+{% block classBody %}class="missions-index"{% endblock %}
+
+{% block body %}
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+
+<main>
+    {% if not user.missions %}
+        <h1>Patience, vous allez bientôt recevoir vos premières missions</h1>
+    {% endif %}
+    {% set missionNotValidate = 0 %}
+    {% set missionValidate = 0 %}
+    <section class="d-flex flex-wrap justify-content-around">
+        {% for mission in user.missions %}
+        <div class="missions">
+        {% if not mission.isValidate %}
+            <div class="mission">
+                {{mission.content|raw}}
+            </div>
+            <a href="{{path('validate_mission', {'id': mission.id})}}" class="btn btn-primary">Valider la mission</a>
+        </div>
+            {% set missionNotValidate = missionNotValidate + 1 %}
+        {% else %}
+            {% set missionValidate = missionValidate + 1 %}
+        {% endif %}
+        
+        {% endfor %}
+    </section>
+
+    {% if missionValidate == user.missions|length %}
+        <h1>Bravo, vous avez terminé toutes vos missions pour aujourd'hui 🎉</h1>
+    {% endif %}
+    
+
+</main>
+
+{% endblock %}

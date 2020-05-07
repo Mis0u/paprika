@@ -1,0 +1,32 @@
+twig:
+    form_themes:
+        - '@KMSFroalaEditor/Form/froala_widget.html.twig'
+
+kms_froala_editor:
+    language: fr
+    pluginsDisabled: [ "save","url","file","video","image"]
+    toolbarInline: false
+    quickInsertTags: [""]
+    toolbarButtons: 
+        moreText: 
+            buttons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontSize', 'textColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+        moreParagraph:
+            buttons: ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+        moreRich:
+            buttons: ['insertLink', 'insertTable', 'fontAwesome', 'specialCharacters']
+            buttonsVisible: 6
+        moreMisc:
+            buttons: ['undo', 'redo', 'fullscreen', 'selectAll', 'html']
+            align: right
+            buttonsVisible: 3
+    theme: "gray"
+    height: 200
+    autofocus: true
+    fileUpload: false
+    imageUpload: false
+    videoUpload: false
+    videoUploadURL: false
+    imageUploadURL: false
+    fileUploadURL: false
+    imageManagerDeleteURL: false
+    imageManagerLoadURL: false

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de {{user.getFullName}}{% endblock %}
+
+{% block body %}
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button class='btn btn-primary'>Valider</button>
+{{ form_end(form) }}
+
+{% endblock %}

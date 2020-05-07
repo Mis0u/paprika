@@ -1,0 +1,24 @@
+@import "./_mixin/_flex.scss";
+@import "./_variables/_variables.scss";
+
+.connection-index{
+    @include flex(space-evenly,center, column);
+
+    h1{
+        color:#fff;
+    }
+
+    form{
+        padding: 30px;
+        border:2px solid $blackRedOpacity;        
+        box-shadow: $formShadow;
+        background-color: #f16d69;
+        p{
+            text-align: center;
+
+            button{
+                transition:all 0.3s ease-in-out;
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des employés{% endblock %}
+
+{% block classBody %}class="gestion-user-index"{% endblock %}
+
+{% block body %}
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+{% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message|raw }}
+            </div>
+{% endfor %}
+<table class="table table-hover">
+<thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Leader ??</th>
+      <th scope="col">Actions</th>
+    </tr>
+</thead>
+<tbody>
+{% for employee in allEmployee %}
+     <tr class="table-primary">
+      <th scope="row">{{employee.lastName}}</th>
+      <td>{{employee.firstName}}</td>
+      <td>
+        {% if employee.isLeader %}
+            Oui
+            {% else %}
+            Non
+        {% endif %}
+      </td>
+      <td>
+      <a href="{{path('edit_employee', {'id': employee.id})}}" class="btn-success p-2"><i class="fa fa-user-edit"></i></a>
+      <a href="#" {% if employee.lastName != "Norris" %}data-toggle="modal" data-target="#modal-delete-{{employee.id}}"{% endif %} class="btn-danger p-2 "> <i class="fa fa-trash"></i></a>
+      {% if employee.lastName != "Norris" %}
+      {% include '_component/_modal_delete.html.twig' with {'name': employee.getFullName, 'route': 'delete_employee', 'target': employee.id } %}
+      {% endif %}
+      </td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% include '_component/_pagination.html.twig' with {'route':'manage_user'} %}
+
+{% endblock %}

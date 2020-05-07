@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,7 +13,7 @@ class Team
 {
     public function __construct()
     {
-        $this->teamName = $this->fullLeaderName();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -20,11 +22,6 @@ class Team
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $teamName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -36,6 +33,11 @@ class Team
      */
     private $leaderLastName;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="workTeam")
+     */
+    private $users;
+
     public function fullLeaderName(): string
     {
         return $this->leaderLastName. " " .$this->leaderFirstName ;
@@ -44,18 +46,6 @@ class Team
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTeamName(): ?string
-    {
-        return $this->teamName;
-    }
-
-    public function setTeamName(string $teamName): self
-    {
-        $this->teamName = $teamName;
-
-        return $this;
     }
 
     public function getLeaderFirstName(): ?string
@@ -78,6 +68,37 @@ class Team
     public function setLeaderLastName(string $leaderLastName): self
     {
         $this->leaderLastName = $leaderLastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setWorkTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getWorkTeam() === $this) {
+                $user->setWorkTeam(null);
+            }
+        }
 
         return $this;
     }

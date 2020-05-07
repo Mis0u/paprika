@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" href="{{path('home', {'slug': app.user.getSlug})}}"><img class="logo" src="{{asset('images/logo.png')}}"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="{{app.user.getAvatar()}}" alt="{{app.user.getLastName()}}"></a>
+        <div class="dropdown-menu" style="">
+          {% if is_granted('ROLE_ADMIN') %}
+            <a class="dropdown-item" href="{{path('add_news')}}">Créer une news</a>
+            <a class="dropdown-item" href="{{path('register')}}">Ajouter un collaborateur</a>
+            <a class="dropdown-item" href="{{path('manage')}}">Administration</a>
+          {% endif %}
+          <a class="dropdown-item" href="{{path('change_password', {'slug': app.user.getSlug()})}}">Modifier mon mot de passe</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="" data-toggle="modal" data-target="#modal-logout">Se déconnecter</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+

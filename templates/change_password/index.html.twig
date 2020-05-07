@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification mdp{% endblock %}
+{% block classBody %}class="change-password-index"{% endblock %}
+
+{% block body %}
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+    <section class="change-pass">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">Enregistrer votre nouveau mot de passe</button>
+    {{ form_end(form) }}
+    </section>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une news{% endblock %}
+{% block classBody %}class="news-index"{% endblock %}
+
+{% block body %}
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+
+<section>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button class="btn btn-primary">Éditer</button>
+{{ form_end(form) }}
+</section>
+{% endblock %}

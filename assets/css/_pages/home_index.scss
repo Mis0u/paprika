@@ -1,0 +1,30 @@
+.home-index{
+    h1{
+        text-align: center;
+    }
+    
+    .dateToday{
+        text-align: center;
+        font-weight: 500;
+    }
+    
+    .show-news{
+        background-color: #FFF;
+        width: 50%;
+        margin: auto;
+        overflow: hidden;
+        border-radius: 15px;
+    
+        >div{
+            overflow-y:auto;
+            height: 50vh;
+            padding: 20px;
+        }
+    }
+    
+    
+    kbd{
+        background-color: #ce5b57;
+        padding: 6px;
+    }
+}

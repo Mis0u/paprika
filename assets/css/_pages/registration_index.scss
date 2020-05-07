@@ -1,0 +1,37 @@
+@import "./_mixin/_flex.scss";
+@import "./_variables/_variables.scss";
+
+.registration-index{
+        section.register{
+            @include flex(center,center);
+            height: calc(100% - #{$navHeight});
+
+            form{
+                width: 50%;
+                
+                h1{
+                    text-align: center;
+                }
+                
+                q{
+                    color:#fff;
+                    font-weight: 500;
+                }
+
+                .form-check{
+                    display: flex;
+                    padding-left: 0;
+
+                        input{
+                            order:2;
+                            padding: 0;
+                            margin-left: 1rem;
+                            position: relative;
+                        }
+                        label{
+                            order:1;
+                        }
+                }
+            }
+        }
+}

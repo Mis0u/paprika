@@ -14,8 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class RegisterType extends AbstractType
 {
-    const BOSS_NAME = "misiti";
-    const BOSS_FIRSTNAME = "mickael";
+    const NOT_BOSS = 0;
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
@@ -38,17 +37,16 @@ class RegisterType extends AbstractType
             ->add('isLeader', CheckboxType::class, [
                 'label' => 'L\'employé est-il leader ?',
                 'required' => false,
+                'attr'=> ['class' => 'isLeader']
             ])
             ->add('workTeam', EntityType::class, [
                 'class' => Team::class,
+                'attr'=> ['class' => 'workTeam'],
                 'label' => false,
                 'required' => true,
                 'placeholder' => false,
                 'query_builder' => function(TeamRepository $teamRepo){
-                    return $teamRepo->findLeaderExceptBossLastName(self::BOSS_NAME);
-                },
-                'query_builder' => function(TeamRepository $teamRepo){
-                    return $teamRepo->findLeaderExceptBossFirstName(self::BOSS_FIRSTNAME);
+                    return $teamRepo->findLeaderExceptBoss(self::NOT_BOSS);
                 },
                 'choice_label' => function($leader){
                     return ucwords($leader->fullLeaderName());

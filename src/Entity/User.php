@@ -20,8 +20,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class User implements UserInterface
 {
     const TEMPORARY_PASSWORD = "paprika";
-    const SUFFIX_EMAIL = "@paprika.com";
     const AVATAR_URL =  "https://api.adorable.io/avatars/60/";
+    const SUFFIX_EMAIL = "@paprika.com";
 
     /**
     *@ORM\PrePersist
@@ -29,10 +29,10 @@ class User implements UserInterface
     */
     public function initializeEmail()
     {
-            $slugify = new Slugify();
-            $this->email = $slugify->slugify($this->getFullName(),"."). self::SUFFIX_EMAIL;
+        $slugify = new Slugify();
+        $this->email= $slugify->slugify($this->getFullName(),"."). self::SUFFIX_EMAIL;
     }
-
+    
     /**
     *@ORM\PrePersist
     *@ORM\PreUpdate
@@ -45,6 +45,7 @@ class User implements UserInterface
 
     /**
     *@ORM\PrePersist
+    *@ORM\PreUpdate
     */
     public function initializeAvatar()
     {
@@ -61,7 +62,8 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(name="email",type="string", length=180, unique=true)
+     * @Assert\Email
      */
     private $email;
 
@@ -137,6 +139,12 @@ class User implements UserInterface
     public function getUsername(): string
     {
         return (string) $this->email;
+    }
+
+    public function setUsername($email)
+    {
+        $this->email = $email;
+        return $this;
     }
 
     /**
@@ -309,4 +317,5 @@ class User implements UserInterface
 
         return $this;
     }
+
 }

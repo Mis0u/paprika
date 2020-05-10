@@ -38,6 +38,11 @@ class Team
      */
     private $users;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isBoss = 0;
+
     public function fullLeaderName(): string
     {
         return $this->leaderLastName. " " .$this->leaderFirstName ;
@@ -99,6 +104,18 @@ class Team
                 $user->setWorkTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsBoss(): ?bool
+    {
+        return $this->isBoss;
+    }
+
+    public function setIsBoss(bool $isBoss): self
+    {
+        $this->isBoss = $isBoss;
 
         return $this;
     }

@@ -24,7 +24,7 @@
 {% for actuality in allNews %}
      <tr class="table-primary">
       <th scope="row">{{actuality.id}}</th>
-      <td class="w-75">{{actuality.news}}</td>
+      <td class="w-75">{{actuality.news|raw}}</td>
       <td>
       <a href="{{path('edit_news',{'id': actuality.id})}}" class="btn-success p-2"><i class="fa fa-user-edit"></i></a>
       <a href="" data-toggle="modal" data-target="#modal-delete-{{actuality.id}}" class="btn-danger p-2"> <i class="fa fa-trash"></i></a>

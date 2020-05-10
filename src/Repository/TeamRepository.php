@@ -23,23 +23,15 @@ class TeamRepository extends ServiceEntityRepository
     //  * @return Team[] Returns an array of Team objects
     //  */
     
-    public function findLeaderExceptBossName($lastName)
+    public function findLeaderExceptBoss($isBoss)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.leaderLastName <> :name')
-            ->setParameter('name',$lastName)
+            ->andWhere('t.isBoss = :bool')
+            ->setParameter('bool',$isBoss)
             ->orderBy('t.leaderLastName', 'ASC')
         ;
     }
 
-    public function findLeaderExceptBossFirstName($firstName)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.leaderFirstName <> :firstname')
-            ->setParameter('firstname',$firstName)
-        ;
-    }
-    
 
     /*
     public function findOneBySomeField($value): ?Team

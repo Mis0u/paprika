@@ -55,4 +55,14 @@ body{
             }
         }
     }
+
+    .invalid-feedback{
+        padding: 5px;
+        background-color:#fdfad3;
+        border-radius: 5px;
+        
+        .form-error-message{
+            font-weight: 700;
+        }
+    }
 }

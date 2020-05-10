@@ -1,14 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modification de {{user.getFullName}}{% endblock %}
+{% block title %}Modification de {{employee.getFullName}}{% endblock %}
 
 {% block body %}
 {% include '_component/_nav.html.twig' %}
 {% include '_component/_modal_logout.html.twig' %}
 
+{% if employee.isLeader %}
+<div class="alert alert-dismissible alert-warning">
+<p><span class="badge badge-danger">Attention, </span>
+vous êtes en train de modifier un chef d'équipe. Si vous décidiez de supprimer cette personne ou modifier son statut de <strong>leader</strong>, veuillez <strong><mark>dans un premier temps</mark></strong> assigner les membres de l'équipe à un autre leader</p>
+<ul>
+    {% for employeeTeam in employeeSameTeam %}
+        <li><a href="{{path('edit_employee', {'id': employeeTeam.id})}}">{{employeeTeam.getFullName}}</a></li>
+    {% endfor %}
+</ul>
+</div>
+{% endif %}
+
+
+
 {{ form_start(form) }}
 {{ form_widget(form) }}
+{% if employee.isLeader %}
+<a href="{{path('delete_leader', {'id': employee.id})}}" class="btn btn-primary">Supprimer son statut de leader</a>
+{% endif %}
 <button class='btn btn-primary'>Valider</button>
 {{ form_end(form) }}
 
+{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('isChecked') }}
+{% endblock %}
 {% endblock %}

@@ -76,6 +76,7 @@ class AppFixtures extends Fixture
 
         $team->setLeaderLastName($user->getLastName())
              ->setLeaderFirstName($user->getFirstName())
+             ->setIsBoss(1)
              ->addUser($user);
         $manager->persist($team);
         $manager->persist($user);

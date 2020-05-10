@@ -5,28 +5,37 @@ namespace App\Controller\admin;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\EditEmployeeType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class EditEmployeeController extends AbstractController
 {
     /**
      * @Route("/edit/employee/{id}", name="edit_employee")
      */
-    public function edit(User $user, Request $request, EntityManagerInterface $manager)
+    public function edit(User $user,UserRepository $userRepo, Request $request, EntityManagerInterface $manager)
     {
         $form = $this->createForm(EditEmployeeType::class, $user);
+        $valueLeaderBeforeHandler = $user->getIsLeader();
         $form->handleRequest($request);
 
+        $userSameTeam = $userRepo->findEmployeFromSameTeam($user->getWorkTeam()->getId(), false);
+
         if ($form->isSubmitted() && $form->isValid()){
-            if ($user->getIsLeader()){
+            if ($user->getIsLeader() && $valueLeaderBeforeHandler === false){
                 $team = new Team();
-                $team->setLeaderLastName(ucfirst($user->getLastName()))
-                     ->setLeaderFirstName(ucfirst($user->getFirstName()))
+                $team->setLeaderFirstName($user->getFirstName())
+                     ->setLeaderLastName($user->getLastName())
                      ->addUser($user);
+                     
                 $manager->persist($team);
+            }elseif ($user->getIsLeader() == $valueLeaderBeforeHandler){
+                $user->getWorkTeam()->setLeaderLastName($user->getLastName());
+                $user->getWorkTeam()->setLeaderFirstName($user->getFirstName());
             }
             $manager->persist($user);
             $manager->flush();
@@ -36,7 +45,8 @@ class EditEmployeeController extends AbstractController
         }
 
         return $this->render('admin/edit_employee.html.twig', [
-            'user' => $user,
+            'employee' => $user,
+            'employeeSameTeam' => $userSameTeam,
             'form' => $form->createView()
         ]);
     }

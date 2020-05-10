@@ -12,16 +12,25 @@
                 {{ message|raw }}
             </div>
 {% endfor %}
+<form action="" method="GET">
+      <div class="form-group">
+      <input type="text" class="form-control" aria-describedby="search" name="user" placeholder="Rechercher un employé">
+      <button><i class="fa fa-search"></i></button>
+    </div>
+</form>
 <table class="table table-hover">
 <thead>
     <tr>
       <th scope="col">Nom</th>
       <th scope="col">Prénom</th>
-      <th scope="col">Leader ??</th>
+      <th scope="col">Leader ?</th>
       <th scope="col">Actions</th>
     </tr>
 </thead>
 <tbody>
+{% if allEmployee|length == 0 %}
+  <p>Votre recherche n'a retournée aucun résultat</p>
+{% endif %}
 {% for employee in allEmployee %}
      <tr class="table-primary">
       <th scope="row">{{employee.lastName}}</th>
@@ -35,16 +44,22 @@
       </td>
       <td>
       <a href="{{path('edit_employee', {'id': employee.id})}}" class="btn-success p-2"><i class="fa fa-user-edit"></i></a>
-      <a href="#" {% if employee.lastName != "Norris" %}data-toggle="modal" data-target="#modal-delete-{{employee.id}}"{% endif %} class="btn-danger p-2 "> <i class="fa fa-trash"></i></a>
-      {% if employee.lastName != "Norris" %}
-      {% include '_component/_modal_delete.html.twig' with {'name': employee.getFullName, 'route': 'delete_employee', 'target': employee.id } %}
-      {% endif %}
+
+      {% for boss in team %}
+        {% if boss.fullLeaderName != employee.getFullName %}
+          <a href="#"data-toggle="modal" data-target="#modal-delete-{{employee.id}}" class="btn-danger p-2 "> <i class="fa fa-trash"></i></a>
+          {% include '_component/_modal_delete.html.twig' with {'name': employee.getFullName, 'route': 'delete_employee', 'target': employee.id } %}
+        {% endif %}
+      {% endfor %}
       </td>
     </tr>
 {% endfor %}
 </tbody>
 </table>
 
-{% include '_component/_pagination.html.twig' with {'route':'manage_user'} %}
+{% if allEmployee|length > 0 %}
+  {% include '_component/_pagination.html.twig' with {'route':'manage_user'} %}
+{% endif %}
+
 
 {% endblock %}

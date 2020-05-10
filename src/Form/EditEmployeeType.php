@@ -4,15 +4,18 @@ namespace App\Form;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Repository\TeamRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class EditEmployeeType extends AbstractType
 {
+    const NOT_BOSS = 0;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -22,18 +25,29 @@ class EditEmployeeType extends AbstractType
             ->add('firstName',TextType::class,[
                 'label' => 'Prénom'
             ])
-            ->add('isLeader',CheckboxType::class,[
-                'label' => 'Est-il leader ?',
-                'required' => false
+            ->add('isLeader', CheckboxType::class, [
+                'label' => 'L\'employé est-il leader ?',
+                'attr'=> ['class' => 'isLeader'],
+                'required' => false,
             ])
             ->add('isMale',CheckboxType::class,[
                 'label' => 'Est-ce un homme ?',
                 'required' => false
             ])
-            ->add('workTeam', EntityType::class,[
+            ->add('workTeam', EntityType::class, [
                 'class' => Team::class,
-                'choice_label' => 'fullLeaderName',
-                'label' => 'Dans l\'équipe de :'
+                'attr'=> ['class' => 'workTeam'],
+                'label' => false,
+                'required' => true,
+                'placeholder' => false,
+                'query_builder' => function(TeamRepository $teamRepo){
+                    return $teamRepo->findLeaderExceptBoss(self::NOT_BOSS);
+                },
+                'choice_label' => function($leader){
+                    return ucwords($leader->fullLeaderName());
+                },
+                'expanded' => false,
+                'multiple' => false
             ])
         ;
     }

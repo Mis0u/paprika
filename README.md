@@ -38,5 +38,27 @@ php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load -n
 ```
 
+J'ai utilisé Webpack Encore, il faudra donc installer yarn (yarn install) ou npm (npm install) selon votre préférence. Une fois installé, exécuté :
+```
+yarn dev
+```
+Ou
+```
+npm run encore dev
+```
+Puis pour terminer, j'ai opté pour l'éditeur de texte Froala qu'il faudra aussi installer en exécutant :
+```
+php bin/console froala:install
+php bin/console assets:install --symlink public
+```
+
+À présent, lancer votre serveur favori et je vous laisses gérer vos employés 😊
+
+___
+
+### Pour commencer
+
+Au début vous pourrez vous connecter avec l'email du patron qui n'est autre que norris.chuck@paprika.com avec comme mdp : paprika
+
 
 

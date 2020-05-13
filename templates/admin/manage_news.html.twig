@@ -2,7 +2,7 @@
 
 {% block title %}Gestion des actualités{% endblock %}
 
-{% block classBody %}class="gestion-news-index"{% endblock %}
+{% block classBody %}class="gestion-news-index admin"{% endblock %}
 
 {% block body %}
 {% include '_component/_nav.html.twig' %}
@@ -12,27 +12,27 @@
                 {{ message|raw }}
             </div>
 {% endfor %}
-<table class="table table-hover">
-<thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Contenu</th>
-      <th scope="col">Actions</th>
-    </tr>
-</thead>
-<tbody>
-{% for actuality in allNews %}
-     <tr class="table-primary">
-      <th scope="row">{{actuality.id}}</th>
-      <td class="w-75">{{actuality.news|raw}}</td>
-      <td>
-      <a href="{{path('edit_news',{'id': actuality.id})}}" class="btn-success p-2"><i class="fa fa-user-edit"></i></a>
-      <a href="" data-toggle="modal" data-target="#modal-delete-{{actuality.id}}" class="btn-danger p-2"> <i class="fa fa-trash"></i></a>
-      </td>
-    </tr>
-{% include '_component/_modal_delete.html.twig' with {'name': actuality.id, 'route': 'delete_news', 'target': actuality.id } %}
-{% endfor %}
-</tbody>
+<table class="table table-hover mt-3 mb-3">
+  <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Contenu</th>
+        <th scope="col">Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+  {% for actuality in all_news %}
+      <tr class="table-primary">
+        <th scope="row">{{actuality.id}}</th>
+        <td class="w-75">{{actuality.news|raw}}</td>
+        <td>
+        <a href="{{path('edit_news',{'id': actuality.id})}}" class="btn-success p-2"><i class="fa fa-user-edit"></i></a>
+        <a href="" data-toggle="modal" data-target="#modal-delete-{{actuality.id}}" class="btn-danger p-2"> <i class="fa fa-trash"></i></a>
+        </td>
+      </tr>
+  {% include '_component/_modal_delete.html.twig' with {'name': actuality.id, 'route': 'delete_news', 'target': actuality.id, 'isLeader': false } %}
+  {% endfor %}
+  </tbody>
 </table>
 
 {% include '_component/_pagination.html.twig' with {'route':'manage_news'} %}

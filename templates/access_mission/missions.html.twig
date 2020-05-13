@@ -9,15 +9,21 @@
 
 <main>
     {% if not user.missions %}
-        <h1>Patience, vous allez bientôt recevoir vos premières missions</h1>
+    <h1 class="text-center">Patience, vous allez bientôt recevoir vos premières missions</h1>
+
     {% endif %}
     {% set missionNotValidate = 0 %}
     {% set missionValidate = 0 %}
-    <section class="d-flex flex-wrap justify-content-around">
+
+    {% if missions|length > 0 %}
+        <h1 class='text-center mb-5 mt-5'>Voici vos missions pour aujourd'hui</h1>
+    {% endif %}
+
+    <section class="d-flex flex-column align-items-center">
         {% for mission in user.missions %}
         
         {% if not mission.isValidate %}
-            <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="card border-primary mb-5" style="max-width: 50rem;">
             <div class="card-body">
                 <p class="card-text">{{mission.content|raw}}</p>
                 <p class="text-center"><a href="{{path('validate_mission', {'id': mission.id})}}" class="btn btn-primary">Valider la mission</a></p>
@@ -33,7 +39,8 @@
     </section>
 
     {% if missionValidate == user.missions|length %}
-        <h1>Bravo, vous avez terminé toutes vos missions pour aujourd'hui 🎉</h1>
+        <h1 class="text-center">Bravo, vous avez terminé toutes vos missions pour aujourd'hui 🎉</h1>
+        <p class='text-center mt-5'><img src="https://media.giphy.com/media/XreQmk7ETCak0/source.gif" alt=""></p>
     {% endif %}
     
 

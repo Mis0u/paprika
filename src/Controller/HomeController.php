@@ -17,16 +17,16 @@ class HomeController extends AbstractController
     {
         $this->denyAccessUnlessGranted('view', $user);
 
-        $countAllUser = $userRepository->findAll();
+        $countAllUser = count($userRepository->findAll());
         $userSameTeam = $userRepository->findEmployeFromSameTeam($user->getWorkTeam()->getId(), false);
         $lastNews = $companyActualityRepo->findOneBy([],['id'=>'DESC']);
         $date = new \DateTime();
         return $this->render('home/accueil.html.twig', [
             'user' => $user,
             'count_all_user' => $countAllUser,
-            'lastNews' => $lastNews,
+            'last_news' => $lastNews,
             'today_date' => $date,
-            'userSameTeam' => $userSameTeam
+            'user_same_team' => $userSameTeam
         ]);
     }
 }

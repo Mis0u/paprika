@@ -19,7 +19,7 @@
                 }
 
                 .form-check{
-                    display: flex;
+                    @include flex(center,center);
                     padding-left: 0;
 
                         input{
@@ -31,6 +31,11 @@
                         label{
                             order:1;
                         }
+                }
+                label{
+                    background-color: #222;
+                    color:#fff;
+                    padding: 3px;
                 }
             }
         }

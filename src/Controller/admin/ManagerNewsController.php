@@ -25,7 +25,7 @@ class ManagerNewsController extends AbstractController
         $allNews = $pagination->paginate(self::LIMIT_RESULT,$page,$newsRepo,'id','DESC');; 
 
         return $this->render('admin/manage_news.html.twig', [
-            'allNews' => $allNews,
+            'all_news' => $allNews,
             'pages' => $pages
         ]);
     }

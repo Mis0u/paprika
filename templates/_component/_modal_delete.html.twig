@@ -8,9 +8,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Êtes-vous sûr de vouloir supprimer {{name}} ?</p>
+        {% if isLeader %}
+        <div class="alert alert-dismissible alert-warning">
+        <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Attention</h4>
+        <p>Vous êtes en train de supprimer un chef d'équipe, avant d'effectuer cette action, 
+        assurez-vous d'avoir bien assigné <strong>le reste de son équipe</strong> à un autre leader</p>
+        </div>
+        {% else %}
+          <p>Êtes-vous sûr de vouloir supprimer {{name}} ?</p>
+        {% endif %}
       </div>
       <div class="modal-footer">
+      {% if isLeader %}
+        Validez-vous la suppression ?
+      {% endif %}
         <a href="{{path(route, {'id': target})}}" class="btn btn-primary">Oui</a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
       </div>

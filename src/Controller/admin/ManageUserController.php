@@ -26,7 +26,7 @@ class ManageUserController extends AbstractController
 
         $allEmployee = $pagination->paginate(self::LIMIT_RESULT,$page,$userRepo,'lastName','ASC');
 
-        $team = $teamRepo->findBy(["isBoss" => true]);
+        $findBoss = $teamRepo->findBy(["isBoss" => true]);
 
         if ($request->get('user')){
             $allEmployee = $userRepo->findEmploye($request->get('user'));
@@ -34,9 +34,9 @@ class ManageUserController extends AbstractController
         }
         
         return $this->render('admin/manage_user.html.twig', [
-            'allEmployee' => $allEmployee,
+            'all_employee' => $allEmployee,
             'pages' => $pages,
-            'team' => $team
+            'find_boss' => $findBoss
         ]);
     }
 }

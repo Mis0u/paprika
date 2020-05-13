@@ -34,7 +34,7 @@ class ChangePasswordController extends AbstractController
             return $this->redirectToRoute('home', ['slug' => $user->getSlug()]);
         }
 
-        return $this->render('change_password/index.html.twig', [
+        return $this->render('change_password/password.html.twig', [
             'form' => $form->createView()
         ]);
     }

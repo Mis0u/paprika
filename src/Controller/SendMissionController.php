@@ -17,6 +17,7 @@ class SendMissionController extends AbstractController
 {
     const ERROR_404 = "Cet employé n'existe pas ou ne fais pas partie de votre équipe";
     const NOT_LEADER = "Seul le chef de votre équipe a accès à cette page";
+    const MISSION_VALIDATE = 1;
 
     /**
      * @Route("/{slug}/assigner-mission/{employee}", name="send_mission")
@@ -27,7 +28,7 @@ class SendMissionController extends AbstractController
         $this->denyAccessUnlessGranted("leader", $user, self::NOT_LEADER);
 
         $userTeam = $userRepo->findBy(['slug' => $employee, 'workTeam' => $user->getWorkTeam(), 'isLeader' => false]);
-        $userMission = $missionRepo->findByMission($userTeam[0]->getId(),1);
+        $userMission = $missionRepo->findByMission($userTeam[0]->getId(),self::MISSION_VALIDATE);
         $allMissionByUser = $missionRepo->findBy(['missionUser' => $userTeam[0]->getId()]);
 
         if (!$userTeam){
@@ -46,11 +47,11 @@ class SendMissionController extends AbstractController
             return $this->redirectToRoute('home', ['slug' => $user->getSlug()]);
         }
 
-        return $this->render('send_mission/index.html.twig', [
+        return $this->render('send_mission/mission.html.twig', [
             'form' => $form->createView(),
             'receiver' => $userTeam[0],
             'mission' => $userMission,
-            'allMissionByUser' => $allMissionByUser
+            'all_mission_by_user' => $allMissionByUser
         ]);
     }
 }

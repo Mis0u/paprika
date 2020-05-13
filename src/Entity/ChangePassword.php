@@ -18,7 +18,7 @@ class ChangePassword
     /**
      * @Assert\Length(
      *     min = 8,
-     *     minMessage = "Voter mot de passe doit faire au moins {{ limit }} caractères!"
+     *     minMessage = "Votre mot de passe doit faire au moins {{ limit }} caractères!"
      * )
      */
     private $newPassword;

@@ -1,0 +1,13 @@
+@import "./_mixin/_flex.scss";
+@import "./_variables/_variables.scss";
+
+.send-mission-index{
+    section{
+        @include flex(center,center, column);
+        height: calc(100% - #{$navHeight});
+    }
+
+    form{
+        width: 70%;
+    }
+}

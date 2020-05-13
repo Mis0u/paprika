@@ -1,33 +1,52 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Modification de {{employee.getFullName}}{% endblock %}
+{% block classBody %}class="employee-edit-index"{% endblock %}
 
 {% block body %}
 {% include '_component/_nav.html.twig' %}
 {% include '_component/_modal_logout.html.twig' %}
 
-{% if employee.isLeader %}
-<div class="alert alert-dismissible alert-warning">
-<p><span class="badge badge-danger">Attention, </span>
-vous êtes en train de modifier un chef d'équipe. Si vous décidiez de supprimer cette personne ou modifier son statut de <strong>leader</strong>, veuillez <strong><mark>dans un premier temps</mark></strong> assigner les membres de l'équipe à un autre leader</p>
-<ul>
-    {% for employeeTeam in employeeSameTeam %}
-        <li><a href="{{path('edit_employee', {'id': employeeTeam.id})}}">{{employeeTeam.getFullName}}</a></li>
-    {% endfor %}
-</ul>
-</div>
-{% endif %}
+<section>
+    {{ form_start(form) }}
+    <h1 class="text-center mb-4">Vous êtes actuellement en train de modifier <br>{{ employee.fullName }}</h1>
 
+    {% if employee.isLeader %}
+        <div class="alert alert-dismissible alert-light">
+            {% if employee_same_team|length > 0 %}
+                <p>Cette équipe est composée de :</p>
+                <ul>
+                    {% for employeeTeam in employeeSameTeam %}
+                        <li><a href="{{path('edit_employee', {'id': employeeTeam.id})}}">{{employeeTeam.getFullName}}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-center">Cette équipe est composée seulement d'un leader 😒</p>
+            {% endif %}
+            
+        </div>
+    {% endif %}
 
+    {% set margin_3 = {'attr': {'class': 'mb-3 mt-3'}} %}
+    
+    {{ form_widget(form.lastName, margin_3) }}
+    {{ form_widget(form.firstName, margin_3) }}
+    <div class="d-flex justify-content-around">
+    {{ form_widget(form.isMale) }}
+    {{ form_widget(form.isLeader, {'attr': {'class': employee.isLeader ? 'd-none' : 'isLeader'},
+                                            'label': employee.isLeader ? false : 'Promouvoir en tant que leader ?', 
+                                            'label_attr': {'class': employee.isLeader ? 'd-none'}}) }}
+    </div>
 
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{% if employee.isLeader %}
-<a href="{{path('delete_leader', {'id': employee.id})}}" class="btn btn-primary">Supprimer son statut de leader</a>
-{% endif %}
-<button class='btn btn-primary'>Valider</button>
-{{ form_end(form) }}
+    {% if not employee.isLeader %}
+        {{ form_label(form.workTeam, 'L\'assigner à un autre Leader :', 
+                                    {'label_attr': {'class': employee.isLeader ? 'd-none' : 'workTeam mt-3'}}) }}
+    {% endif %}
 
+    {{ form_widget(form.workTeam,  {'attr': {'class': employee.isLeader ? 'd-none' : 'workTeam'}}) }}
+    <p class="text-center mt-3"><button class='btn btn-primary'>Valider</button></p>
+    {{ form_end(form) }}
+</section>
 {% block javascripts %}
 {{ parent() }}
 {{ encore_entry_script_tags('isChecked') }}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Assigner vos missions !!{% endblock %}
+{% block classBody %}class="send-mission-index"{% endblock %}
+
+{% block body %}
+{% include '_component/_nav.html.twig' %}
+{% include '_component/_modal_logout.html.twig' %}
+
+<section>
+    {{form_start(form)}}
+        <h1 class="text-center mb-5">Assignez une mission à {{ receiver.getFullName }} </h1>
+        {{form_widget(form)}}
+        <p class="text-center"><button class="btn btn-primary">Soumettre</button></p>
+    {{form_end(form)}}
+
+    {% if all_mission_by_user|length == 0 %}
+        <div class="alert alert-dismissible alert-success p-3">
+        <p class="text-center">Assigné à {{ receiver.firstName }} sa première mission</p>
+        </div>
+    {% else %}
+        <div class = "alert alert-dismissible alert-primary">
+            <p class="text-center">{{ receiver.firstName }} a été affecté à {{all_mission_by_user|length}} missions et en a validé {{mission|length}}</p>
+        </div>
+</section>
+{% endif %}
+
+{% endblock %}

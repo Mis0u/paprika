@@ -20,20 +20,12 @@ class EditEmployeeController extends AbstractController
     public function edit(User $user,UserRepository $userRepo, Request $request, EntityManagerInterface $manager)
     {
         $form = $this->createForm(EditEmployeeType::class, $user);
-        $valueLeaderBeforeHandler = $user->getIsLeader();
         $form->handleRequest($request);
 
         $userSameTeam = $userRepo->findEmployeFromSameTeam($user->getWorkTeam()->getId(), false);
 
         if ($form->isSubmitted() && $form->isValid()){
-            if ($user->getIsLeader() && $valueLeaderBeforeHandler === false){
-                $team = new Team();
-                $team->setLeaderFirstName($user->getFirstName())
-                     ->setLeaderLastName($user->getLastName())
-                     ->addUser($user);
-                     
-                $manager->persist($team);
-            }elseif ($user->getIsLeader() == $valueLeaderBeforeHandler){
+            if ($user->getIsLeader()){
                 $user->getWorkTeam()->setLeaderLastName($user->getLastName());
                 $user->getWorkTeam()->setLeaderFirstName($user->getFirstName());
             }
@@ -46,7 +38,7 @@ class EditEmployeeController extends AbstractController
 
         return $this->render('admin/edit_employee.html.twig', [
             'employee' => $user,
-            'employeeSameTeam' => $userSameTeam,
+            'employee_same_team' => $userSameTeam,
             'form' => $form->createView()
         ]);
     }

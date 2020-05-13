@@ -1,0 +1,34 @@
+@import "./_mixin/_flex.scss";
+@import "./_variables/_variables.scss";
+
+.employee-edit-index{
+    section{
+        @include flex(center,center);
+        height: calc(100% - #{$navHeight});
+
+        form{
+            width: 70%;
+
+            .form-check{
+                @include flex(center,center);
+                padding-left: 0;
+
+                    input{
+                        order:2;
+                        padding: 0;
+                        margin-left: 1rem;
+                        position: relative;
+                    }
+                    label{
+                        order:1;
+                    }
+            }
+
+            label{
+                background-color: #222;
+                color:#fff;
+                padding: 3px;
+            }
+        }
+    }
+}

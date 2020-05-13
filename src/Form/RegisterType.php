@@ -42,7 +42,7 @@ class RegisterType extends AbstractType
             ->add('workTeam', EntityType::class, [
                 'class' => Team::class,
                 'attr'=> ['class' => 'workTeam'],
-                'label' => false,
+                'label' => 'L\'assigner à un chef d\'équipe :',
                 'required' => true,
                 'placeholder' => false,
                 'query_builder' => function(TeamRepository $teamRepo){

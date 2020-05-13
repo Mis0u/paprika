@@ -2,7 +2,7 @@
 
 {% block title %}Gestion des employés{% endblock %}
 
-{% block classBody %}class="gestion-user-index"{% endblock %}
+{% block classBody %}class="gestion-user-index admin"{% endblock %}
 
 {% block body %}
 {% include '_component/_nav.html.twig' %}
@@ -13,51 +13,56 @@
             </div>
 {% endfor %}
 <form action="" method="GET">
-      <div class="form-group">
+      <div class="form-group search-user mt-3">
       <input type="text" class="form-control" aria-describedby="search" name="user" placeholder="Rechercher un employé">
       <button><i class="fa fa-search"></i></button>
     </div>
 </form>
-<table class="table table-hover">
-<thead>
-    <tr>
-      <th scope="col">Nom</th>
-      <th scope="col">Prénom</th>
-      <th scope="col">Leader ?</th>
-      <th scope="col">Actions</th>
-    </tr>
-</thead>
-<tbody>
-{% if allEmployee|length == 0 %}
-  <p>Votre recherche n'a retournée aucun résultat</p>
-{% endif %}
-{% for employee in allEmployee %}
-     <tr class="table-primary">
-      <th scope="row">{{employee.lastName}}</th>
-      <td>{{employee.firstName}}</td>
-      <td>
-        {% if employee.isLeader %}
-            Oui
+<table class="table table-hover mt-3 mb-3">
+  {% if all_employee|length > 0 %}
+  <thead>
+      <tr>
+        <th scope="col">Nom</th>
+        <th scope="col">Prénom</th>
+        <th scope="col">Leader ?</th>
+        <th scope="col">Actions</th>
+      </tr>
+  </thead>
+  {% endif %}
+  <tbody>
+    {% if all_employee|length == 0 %}
+      <div class="alert alert-dismissible alert-danger">
+          <p class="text-center">Votre recherche n'a retournée aucun résultat</p>
+          <p class="text-center"><a class="btn" href="{{path('manage_user')}}">Retour</a></p>
+      </div>
+    {% endif %}
+    {% for employee in all_employee %}
+        <tr class="table-primary">
+          <th scope="row">{{employee.lastName}}</th>
+          <td>{{employee.firstName}}</td>
+          <td>
+            {% if employee.isLeader %}
+                Oui
             {% else %}
-            Non
-        {% endif %}
-      </td>
-      <td>
-      <a href="{{path('edit_employee', {'id': employee.id})}}" class="btn-success p-2"><i class="fa fa-user-edit"></i></a>
+                Non
+            {% endif %}
+          </td>
+          <td>
+          <a href="{{path('edit_employee', {'id': employee.id})}}" class="btn-success p-2"><i class="fa fa-user-edit"></i></a>
 
-      {% for boss in team %}
-        {% if boss.fullLeaderName != employee.getFullName %}
-          <a href="#"data-toggle="modal" data-target="#modal-delete-{{employee.id}}" class="btn-danger p-2 "> <i class="fa fa-trash"></i></a>
-          {% include '_component/_modal_delete.html.twig' with {'name': employee.getFullName, 'route': 'delete_employee', 'target': employee.id } %}
-        {% endif %}
-      {% endfor %}
-      </td>
-    </tr>
-{% endfor %}
-</tbody>
+          {% for boss in find_boss %}
+            {% if boss.fullLeaderName != employee.getFullName %}
+              <a href="#"data-toggle="modal" data-target="#modal-delete-{{employee.id}}" class="btn-danger p-2 "> <i class="fa fa-trash"></i></a>
+              {% include '_component/_modal_delete.html.twig' with {'name': employee.getFullName, 'route': 'delete_employee', 'target': employee.id, 'isLeader': employee.isLeader } %}
+            {% endif %}
+          {% endfor %}
+          </td>
+        </tr>
+    {% endfor %}
+  </tbody>
 </table>
 
-{% if allEmployee|length > 0 %}
+{% if all_employee|length > 0 %}
   {% include '_component/_pagination.html.twig' with {'route':'manage_user'} %}
 {% endif %}
 

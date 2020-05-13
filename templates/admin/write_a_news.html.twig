@@ -8,11 +8,11 @@
 {% include '_component/_modal_logout.html.twig' %}
 
 <section>
-{{ form_start(form) }}
-    <h1 class="text-center mb-3 ">Écrire une news</h1>
-    {{ form_widget(form) }}
+    {{ form_start(form) }}
+        <h1 class="text-center mb-3 ">Écrire une news</h1>
+        {{ form_widget(form) }}
 
-    <button class="btn btn-primary w-100">Publier</button>
-{{ form_end(form) }}
+        <p class="text-center"><button class="btn btn-primary">Publier</button></p>
+    {{ form_end(form) }}
 </section>
 {% endblock %}

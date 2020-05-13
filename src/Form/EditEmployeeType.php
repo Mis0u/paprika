@@ -25,19 +25,15 @@ class EditEmployeeType extends AbstractType
             ->add('firstName',TextType::class,[
                 'label' => 'Prénom'
             ])
-            ->add('isLeader', CheckboxType::class, [
-                'label' => 'L\'employé est-il leader ?',
-                'attr'=> ['class' => 'isLeader'],
-                'required' => false,
-            ])
             ->add('isMale',CheckboxType::class,[
                 'label' => 'Est-ce un homme ?',
                 'required' => false
             ])
+            ->add('isLeader', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('workTeam', EntityType::class, [
                 'class' => Team::class,
-                'attr'=> ['class' => 'workTeam'],
-                'label' => false,
                 'required' => true,
                 'placeholder' => false,
                 'query_builder' => function(TeamRepository $teamRepo){

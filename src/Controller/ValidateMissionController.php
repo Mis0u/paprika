@@ -14,6 +14,8 @@ class ValidateMissionController extends AbstractController
      */
     public function index(Mission $mission, EntityManagerInterface $manager)
     {
+        $this->denyAccessUnlessGranted('view',$mission->getMissionUser());
+
         $mission->setIsValidate(1);
         $manager->persist($mission);
         $manager->flush();

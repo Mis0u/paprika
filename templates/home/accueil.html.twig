@@ -13,36 +13,47 @@
             </div>
 {% endfor %}
 
-<h1 class="mt-4">Bonjour <br>{{user.getFullName}}</h1>
-<p class="dateToday mt-3">Nous sommes le <time><datetime>{{today_date|date('d/m/Y')}}</datetime></time> et voici les dernières actualités de l'Entreprise :</p>
+    <h1 class="mt-4">Bonjour <br>{{user.getFullName}}</h1>
+    <p class="dateToday mt-3">Nous sommes le <time><datetime>{{today_date|date('d/m/Y')}}</datetime></time> 
+                            et voici les dernières actualités de l'Entreprise :
+    </p>
 
-<div class="show-news">
-    <div>
-        {{lastNews.news|raw}}
+    <div class="show-news">
+        <div>
+            {{last_news.news|raw}}
+        </div>
     </div>
-</div>
 
-{% if not user.isLeader %}
-    <p class="text-center mt-3">
-    <kbd>
-{% if user.isMale %}
-    Prêt 
-{% else %}
-    Prête 
-{% endif %}
-    pour commencer votre journée, alors cliquer sur le bouton ci-dessous</kbd></p>
+    {% if not user.isLeader %}
+        <p class="text-center mt-3">
+        <kbd>
+        {% if user.isMale %}
+            Prêt 
+        {% else %}
+            Prête 
+        {% endif %}
+        pour commencer votre journée, alors cliquer sur le bouton ci-dessous</kbd></p>
 
-    <p class="text-center"><a href="{{path('access_mission', {'slug': user.slug})}}" class="btn btn-primary">Mes missions <i class="far fa-flag"></i></a></p>
+        <p class="text-center"><a href="{{path('access_mission', {'slug': user.slug})}}" class="btn btn-primary">Mes missions
+                                    <i class="far fa-flag"></i>
+                               </a>
+        </p>
     {% else %}
-        {% if userSameTeam %}
-        <p class="text-center">Cliquez sur votre collègue pour lui attribuer une mission</p>
-    <div class="d-flex justify-content-center mt-3">
-        {% for workmate in userSameTeam %}
-            <a href="{{ path('send_mission', {'slug':user.slug , 'employee': workmate.slug}) }}" class="btn-primary btn">{{ workmate.getFullName }}</a>
-        {% endfor %}
-    </div>
+            {% if user_same_team %}
+                <p class="text-center mt-3"><kbd>Cliquez sur votre collègue pour lui attribuer une mission</kbd></p>
+                <div class="d-flex justify-content-center mt-3">
+
+                {% for work_mate in user_same_team %}
+                    <a href="{{ path('send_mission', {'slug':user.slug , 'employee': work_mate.slug}) }}" class="btn-primary btn">
+                        {{ work_mate.getFullName }}
+                    </a>
+                {% endfor %}
+                </div>
+            {% endif %}
     {% endif %}
-{% endif %}
+    {% if is_granted("ROLE_ADMIN") %}
+        <p class="text-center mt-3"><kbd>À ce jour {{count_all_user}} employés travaillent avec vous 😍</kbd></p>
+    {% endif %}
 
 
 

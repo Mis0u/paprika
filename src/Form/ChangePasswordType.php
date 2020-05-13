@@ -4,22 +4,18 @@ namespace App\Form;
 
 
 use App\Entity\ChangePassword;
-use Symfony\Component\Form\AbstractType;
+use App\Form\Service\OptionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ChangePasswordType extends AbstractType
+class ChangePasswordType extends OptionType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('oldPassword', PasswordType::class, [
-                'label' => false,
-                'attr' => ['placeholder' => 'Indiquez votre ancien mot de passe'],
-                'required' => true
-            ])
+            ->add('oldPassword', PasswordType::class, $this->addFormOptions(false, OptionType::REQUIRED,['placeholder' =>'Indiquez votre ancien mot de passe']))
             ->add('newPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identique',

@@ -16,7 +16,7 @@
             {% if employee_same_team|length > 0 %}
                 <p>Cette équipe est composée de :</p>
                 <ul>
-                    {% for employeeTeam in employeeSameTeam %}
+                    {% for employeeTeam in employee_same_team %}
                         <li><a href="{{path('edit_employee', {'id': employeeTeam.id})}}">{{employeeTeam.getFullName}}</a></li>
                     {% endfor %}
                 </ul>

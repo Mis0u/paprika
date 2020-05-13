@@ -4,34 +4,25 @@ namespace App\Form;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Form\Service\OptionType;
 use App\Repository\TeamRepository;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class EditEmployeeType extends AbstractType
+class EditEmployeeType extends OptionType
 {
     const NOT_BOSS = 0;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lastName', TextType::class,[
-                'label' => 'Nom de famille'
-            ])
-            ->add('firstName',TextType::class,[
-                'label' => 'Prénom'
-            ])
-            ->add('isMale',CheckboxType::class,[
-                'label' => 'Est-ce un homme ?',
-                'required' => false
-            ])
-            ->add('isLeader', CheckboxType::class, [
-                'required' => false,
-            ])
+            ->add('lastName', TextType::class, $this->addFormOptions('Nom de famille', OptionType::REQUIRED))
+            ->add('firstName',TextType::class, $this->addFormOptions('Prénom', OptionType::REQUIRED))
+            ->add('isMale',CheckboxType::class, $this->addFormOptions('Est-ce un homme ?', OptionType::NOT_REQUIRED))
+            ->add('isLeader', CheckboxType::class, $this->addFormOptions(OptionType::NO_LABEL, OptionType::NOT_REQUIRED))
             ->add('workTeam', EntityType::class, [
                 'class' => Team::class,
                 'required' => true,
